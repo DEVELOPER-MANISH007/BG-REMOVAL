@@ -10,12 +10,20 @@ const clkerWebhooks = async (req, res) => {
   try {
     // crerate a svix istance wqith clerk webhooks
     const whook = new Webhook(process.env.CLERK_WEBHOOK_SECRET);
-    await whook.verify(JSON.stringify(req.body), {
+    const payload =
+      req.rawBody ||
+      (typeof req.body === "string"
+        ? req.body
+        : Buffer.isBuffer(req.body)
+        ? req.body.toString("utf8")
+        : JSON.stringify(req.body));
+
+    const evt = await whook.verify(payload, {
       "svix-id": req.headers["svix-id"],
-      "svix-timestamp": req.headers["Svix-timestamp"],
+      "svix-timestamp": req.headers["svix-timestamp"],
       "svix-signature": req.headers["svix-signature"],
     });
-    const { data, type } = req.body;
+    const { data, type } = evt;
     console.log(
       "Webhook received - Type:",
       type,

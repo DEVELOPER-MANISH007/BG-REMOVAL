@@ -12,7 +12,15 @@ const PORT = process.env.PORT || 5000;
 const app = express();
 
 app.use(cors());
-app.use(express.json());
+app.use(
+  express.json({
+    verify: (req, res, buf) => {
+      if (req.originalUrl.startsWith("/api/user/webhooks")) {
+        req.rawBody = buf.toString();
+      }
+    },
+  })
+);
 
 // Database connection
 dotenv.config();
