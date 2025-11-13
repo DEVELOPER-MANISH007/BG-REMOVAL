@@ -21,7 +21,7 @@ const connectDB = async () => {
 
        // Construct connection string properly
        const mongoURI = process.env.MONGODB_URI;
-       const dbName = "pingup";
+       const dbName = "bg-removal";
        
        // Check if URI already has a database name
        let connectionString;
