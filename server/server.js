@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import connectDB from "./Config/db.js";
 import dotenv from "dotenv";
+import UserRouter from "./Routes/userRoutes.js";
 
 
 
@@ -23,7 +24,7 @@ connectDB();
 app.get("/", (req, res) => {
     res.send("Server is running");
 });
-
+app.use('/api/user',UserRouter)
 
 
 app.listen(PORT, () => {
