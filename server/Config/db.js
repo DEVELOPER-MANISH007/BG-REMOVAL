@@ -13,10 +13,16 @@ const connectDB = async () => {
        }
 
        mongoose.connection.on("connected",()=>{
-        console.log("Connected to MongoDB");
+        console.log("✅ Connected to MongoDB");
+        console.log("📊 Database:", mongoose.connection.db.databaseName);
+        console.log("🌐 Host:", mongoose.connection.host);
+        console.log("🔌 Connection state:", mongoose.connection.readyState);
        });
        mongoose.connection.on("error",(error)=>{
-        console.log("MongoDB connection error:", error.message);
+        console.error("❌ MongoDB connection error:", error.message);
+       });
+       mongoose.connection.on("disconnected",()=>{
+        console.log("⚠️ MongoDB disconnected");
        });
 
        // Construct connection string properly
