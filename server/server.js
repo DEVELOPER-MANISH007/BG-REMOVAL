@@ -3,6 +3,7 @@ import cors from "cors";
 import connectDB from "./Config/db.js";
 import dotenv from "dotenv";
 import UserRouter from "./Routes/userRoutes.js";
+import imageRouter from "./Routes/ImageRoutes.js";
 
 
 
@@ -33,6 +34,7 @@ app.get("/", (req, res) => {
     res.send("Server is running");
 });
 app.use('/api/user',UserRouter)
+app.use('/api/image',imageRouter)
 
 
 app.listen(PORT, () => {
