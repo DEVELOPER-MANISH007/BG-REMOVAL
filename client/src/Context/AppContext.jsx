@@ -1,7 +1,7 @@
 import { createContext, useState } from "react";
 import {useAuth, useUser} from '@clerk/clerk-react'
 import axios from 'axios'
-import { toast } from "react-toastify";
+import { useNotifications } from 'reapop';
 import { useNavigate } from "react-router-dom";
 
  
@@ -20,6 +20,7 @@ const navigate = useNavigate()
 const {getToken} = useAuth()
 const {isSignedIn} = useUser()
 const {openSingIn} = useUser()
+const { notify } = useNotifications()
 
  const loadCreditData = async()=>{
   try {
@@ -37,7 +38,13 @@ const {openSingIn} = useUser()
 
   } catch (error) {
     console.log(error.response?.data || error.message)
-    toast.error(error.response?.data?.message || error.message)
+    notify({
+      title: 'Error',
+      message: error.response?.data?.message || error.message,
+      status: 'error',
+      dismissible: true,
+      dismissAfter: 5000,
+    })
   }
 
 
@@ -62,7 +69,13 @@ const {openSingIn} = useUser()
       setResultImage(data.resultImage)
       data.creditBalance && setCredit(data.creditBalance)
     }else{
-      toast.error(data.message)
+      notify({
+        title: 'Error',
+        message: data.message,
+        status: 'error',
+        dismissible: true,
+        dismissAfter: 5000,
+      })
       data.creditBalance && setCredit(data.creditBalance)
       if(data.creditBalance===0){
         navigate('/buy')
@@ -72,7 +85,13 @@ const {openSingIn} = useUser()
     
   } catch (error) {
     console.log(error.response?.data || error.message)
-    toast.error(error.response?.data?.message || error.message)
+    notify({
+      title: 'Error',
+      message: error.response?.data?.message || error.message,
+      status: 'error',
+      dismissible: true,
+      dismissAfter: 5000,
+    })
   }
  }
 

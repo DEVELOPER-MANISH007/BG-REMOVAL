@@ -5,6 +5,7 @@ import App from './App.jsx'
 import { BrowserRouter } from 'react-router-dom'  
 import { ClerkProvider } from '@clerk/clerk-react'
 import AppContextProvider from './Context/AppContext.jsx'
+import { NotificationsProvider } from 'reapop'
 
 
 
@@ -17,11 +18,13 @@ if (!PUBLISHABLE_KEY) {
 
 createRoot(document.getElementById('root')).render(
   <BrowserRouter>
- <ClerkProvider publishableKey={PUBLISHABLE_KEY}>
-    <AppContextProvider>
-        <App />
+    <ClerkProvider publishableKey={PUBLISHABLE_KEY}>
+      <NotificationsProvider>
+        <AppContextProvider>
+          <App />
         </AppContextProvider>
-      </ClerkProvider>
+      </NotificationsProvider>
+    </ClerkProvider>
   </BrowserRouter>
 
 )
